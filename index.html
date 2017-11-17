@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> iR&R </title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+
+
+<style type="text/css">
+	main {
+		height: 100%; width: 100%;
+		border: 10px solid red;
+		background-color: black;
+
+		position: relative;
+		display: flex;
+	}
+
+	.brand {
+		border-radius: 50%;
+		width: 0;
+		height: 0;	
+		opacity: 0;
+		font-size: 2.5em;
+
+		position: absolute;top:50%;left:50%;
+		transform: translate(-50%,-50%);
+
+		background-color: white;
+		transition: all 1s;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		z-index: 999;
+	}
+
+	.brand-show {
+		width: 300px;
+		height: 300px;		
+		opacity: 1;
+	}
+	.brand-corner {
+		top:0;left:0;
+		transform: translate(0,0);
+		width: 100px;
+		height: 100px;
+		font-size: .8em;
+	}
+
+	.brand-inverse {
+		color: white;
+		background: black;
+	}
+	.about {
+
+		position: absolute;top:100%;left:100%;
+		transform: translate(-100%,-100%);
+		width: 100px;
+		height: 75px;
+		opacity: 0;
+
+		transition: all 1s;
+		background-color: transparent;
+
+	}
+
+	.about * {
+		margin: 0;
+	}
+
+	.about-show {
+		top:50%;left:50%;transform: translate(-50%,-50%);
+		width: 400px;
+		height: auto; /*change height to fit all text*/
+		opacity: 1;
+	}
+
+	.about-nav {
+	  top:0;
+	  left:50%;
+	  width: 100%;
+	  height: 100px;
+	  transform: translate(-50%,0);
+	  text-align: right;
+	}
+
+	.about-text {
+		height: 100%;
+		background-color: white;
+	}
+
+	.explore {
+		width: 0;
+		height: 50px;
+		background-color: red;
+		transition: width .85s, color .85s;
+		text-align: center;
+		color: transparent;
+	}
+	.explore-show {	
+		width: 100%;
+	}
+
+	.explore-before-show {
+		color: white;
+		transition: color 1.3s;
+	}
+
+	.explore-before-shrink {
+		height: 0;
+		color: transparent;
+		transition: all .5s;
+	}
+	.explore-after {
+		height: 0;
+		text-align: center;
+		font-size: 30px;
+		color: transparent;
+		transition: all 1s;
+	}
+	.explore-after-expand {
+		color: white;
+		height: 100%;
+	}
+
+
+
+</style>
+
+</head>
+<body>
+
+	<main>
+		<div id='brand' class='brand'> 
+			<span>ice</span>
+			<span>Chop</span>
+			<span>&</span>
+			<span>Roll</span>
+		</div>	
+
+
+
+		<div id='about' class='about'>
+
+		<h4 id='about-text' class='about-text'>
+			irar is founded by xx & yy. 
+			We are two young horny Vietnamese guys who want to get laid. We are a company of energetic and earnest people whose goal is to deliver joy and deliciousness to our valuable customers through our rock&roll icecream.
+			<br>
+			We are located at the corner of freezing and chopping, 12312 xxxx st., orlando FL 23123.
+			<br>
+		</h4>
+
+			
+		</div>
+
+
+		<div id='explore' class='explore'>
+			<div id='explore-before' class='explore-before'>
+				Ready to chop some ice into cream? <br>Explore our Menu 
+			</div>
+			<div id='explore-after' class='explore-after'>
+				The Incredible Menu
+			</div>
+
+
+		</div>
+
+	</main>
+
+<script type="text/javascript" src='app.js'></script>
+
+<script type="text/javascript">
+	window.onload = (() => {
+		var brand = document.getElementById('brand');
+
+		brand.classList.add('brand-show');
+
+		brand.addEventListener('click', ()=> {
+			brand.classList.add('brand-corner');
+
+			var about = document.getElementById('about');
+			about.classList.add('about-show');
+
+			about.appendChild(explore);
+		});
+
+
+
+		var explore = document.getElementById('explore');
+
+
+
+		about.addEventListener('transitionend', (event)=> {
+			if (event.propertyName === 'transform') {
+				console.log('done cornering');
+				explore.classList.add('explore-show');
+				exploreBefore.classList.add('explore-before-show');
+			}	
+		});
+		// explore.addEventListener('transitionend', (event)=> {
+		// 	if (event.propertyName === 'width') {
+		// 		exploreBefore.classList.add('explore-before-show');
+		// 	}
+		// });
+
+		var exploreAfter = document.getElementById('explore-after');
+		var exploreBefore = document.getElementById('explore-before');
+		explore.addEventListener('click', ()=> {
+			about.classList.add('about-nav');
+			brand.classList.add('brand-inverse');
+
+			exploreBefore.classList.add('explore-before-shrink');
+			exploreAfter.classList.add('explore-after-expand');
+		});
+
+		brand.addEventListener('transitionend', (event)=> {
+			if (event.propertyName === 'color') {
+				console.log('done turning --about-- into nav');
+				document.getElementById('explore-before').remove();
+				
+			}
+		});
+
+		exploreAfter.addEventListener('transitionend', (event)=> {
+			if (event.propertyName === 'color') {
+				console.log('done turning description "ready to chop.." into "Incredible Menu" ');
+				
+				//TODO:
+				// continue showing menu items
+
+			}
+		});
+
+
+	});
+
+
+
+	
+
+
+</script>
+
+</body>
+</html>
+
+
